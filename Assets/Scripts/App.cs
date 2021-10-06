@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class App : MonoBehaviour
 {
-    public Color m_GoodColor, m_BadColor, m_DefaultColor;
+    public RuntimeAnimatorController m_GreenButtonAnim, m_RedButtonAnim, m_BlueButtonAnim;
     public GameObject m_SettingsScreen, m_CalcScreen, m_ResultScreen;
     public Toggle m_AddToggle, m_SubToggle, m_MulToggle, m_DivToggle, m_SndToggle;
-    public Text m_CountText, m_TitleText, m_QuestionText, m_TimerText;
+    public TextMeshProUGUI m_CountText, m_TitleText, m_QuestionText, m_TimerText;
     public Button m_NextButton;
-    public Image[] m_ButtonImages;
-    public Text[] m_ButtonTexts, m_ResultTexts;
+    public Animator[] m_ButtonAnimators;
+    public TextMeshProUGUI[] m_ButtonTexts, m_ResultTexts;
     public GameObject[] m_Results;
     public string[] m_OperatorStrings;
     public AudioSource m_AudioSource;
@@ -145,7 +146,7 @@ public class App : MonoBehaviour
 
             for (int i = 0; i < 9; ++i)
             {
-                m_ButtonImages[i].color = i == m_RightAnswerIndex ? m_GoodColor : m_BadColor;
+                m_ButtonAnimators[i].runtimeAnimatorController = i == m_RightAnswerIndex ? m_GreenButtonAnim : m_RedButtonAnim;
             }
             m_NextButton.interactable = true;
         }
@@ -285,7 +286,7 @@ public class App : MonoBehaviour
         for (int i = 0; i < 9; ++i)
         {
             m_ButtonTexts[i].text = answers[i].ToString();
-            m_ButtonImages[i].color = m_DefaultColor;
+            m_ButtonAnimators[i].runtimeAnimatorController = m_BlueButtonAnim;
         }
         m_TitleText.text = string.Format("{0} / {1}", m_Index + 1, m_TotalCount);
 
